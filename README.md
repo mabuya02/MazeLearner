@@ -12,7 +12,7 @@ A retro version of MazeRunner that utilises Python 3D modelling to expose a 'Wor
 `cd MazeLearner`
 * Required libraries and packages are listed in the `requirements.txt` file.
 
-* To check/refresh the required modules for the project, run the following command on your project directory:
+* To check or refresh the required modules for the project, run the following command on your project directory:
 
 `pip freeze > requirements.txt`
 
@@ -31,7 +31,7 @@ A retro version of MazeRunner that utilises Python 3D modelling to expose a 'Wor
   
 `logging.basicConfig(filename='log.txt', level=logging.INFO)`
 
-  Learn more about [Python logs](https://docs.python.org/3/library/logging.html).
+  To learn more about [Python logs](https://docs.python.org/3/library/logging.html).
   
 
 * You may need to obtain a **Wordnik API Key** in order to work with word meanings.
@@ -39,7 +39,7 @@ A retro version of MazeRunner that utilises Python 3D modelling to expose a 'Wor
   Visit [Wordnik](https://developer.wordnik.com) to learn more.
 
 ## Contribution
-Contributions are welcome! Feel free to submit bug reports, feature requests, or even pull requests to improve the game.
+Contributions are welcome! Feel free to submit any bug reports, feature requests, or even pull requests, in order to improve the game.
 
 ## License
 This project is licensed under the [MIT License](https://github.com/git/git-scm.com/blob/main/MIT-LICENSE.txt).

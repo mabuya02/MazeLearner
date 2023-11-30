@@ -7,14 +7,27 @@ WIDTH, HEIGHT = 800, 600
 BACKGROUND_COLOR = (0, 0, 0)
 PACMAN_COLOR = (255, 255, 0)
 PACMAN_RADIUS = 30
-MOVEMENT_SPEED = 10
+MOVEMENT_SPEED = 20
 POINTS = 0
 LETTER_SIZE = 50
 SWITCH_DELAY = 3000  #ms
+LONG_PRESS_THRESHOLD = 600  # milliseconds
+
+
+# Variables for long press detection
+long_press_timer = 0
+long_press_active = False
 
 # Set up display
 screen = pg.display.set_mode((WIDTH, HEIGHT))
 pg.display.set_caption("Loot trial")
+
+# Load the background image
+background_image = pg.image.load(f"{tasks.IMAGE_PATH}/skybox.jpg")
+
+# Scale the image to fit the screen
+background_image = pg.transform.scale(background_image, (WIDTH, HEIGHT))
+background_rect = background_image.get_rect()
 
 # Set up Pac-Man
 pacman_x, pacman_y = WIDTH // 2, HEIGHT // 2
@@ -32,7 +45,7 @@ word_meaning=tasks.defineWord(word)
 
 # Set up letters
 split_word = list(word)
-print(split_word)
+# print(split_word)
 
 # Set up letters
 # Set up letters
@@ -53,8 +66,8 @@ def check_collisions():
 
 # Game loop
 clock = pg.time.Clock()
-switch_time = pg.time.get_ticks()  # Initial time for text switch
-switched = False  # Flag to check if text has been switched
+# switch_time = pg.time.get_ticks()  # Initial time for text switch
+# switched = False  # Flag to check if text has been switched
 
 while True:
     for event in pg.event.get():
@@ -62,16 +75,38 @@ while True:
             pg.quit()
             sys.exit()
 
-        # Update Pac-Man position dynamically
+        # handle key presses(short and long)
         elif event.type == pg.KEYDOWN:
             if event.key == pg.K_LEFT:
-                pacman_x -= MOVEMENT_SPEED
+                # pacman_x -= MOVEMENT_SPEED
+                long_press_timer = pg.time.get_ticks()
+                long_press_active = True
+                
             elif event.key == pg.K_RIGHT:
-                pacman_x += MOVEMENT_SPEED
+                long_press_timer = pg.time.get_ticks()
+                long_press_active = True
             elif event.key == pg.K_UP:
-                pacman_y -= MOVEMENT_SPEED
+                long_press_timer = pg.time.get_ticks()
+                long_press_active = True
             elif event.key == pg.K_DOWN:
-                pacman_y += MOVEMENT_SPEED
+                long_press_timer = pg.time.get_ticks()
+                long_press_active = True
+
+        elif event.type == pg.KEYUP:
+            if event.key in [pg.K_LEFT, pg.K_RIGHT, pg.K_UP, pg.K_DOWN]:
+                long_press_active = False
+
+
+     # Update Pac-Man position dynamically
+    keys = pg.key.get_pressed()
+    if keys[pg.K_LEFT]:
+        pacman_x -= MOVEMENT_SPEED
+    if keys[pg.K_RIGHT]:
+        pacman_x += MOVEMENT_SPEED
+    if keys[pg.K_UP]:
+        pacman_y -= MOVEMENT_SPEED
+    if keys[pg.K_DOWN]:
+        pacman_y += MOVEMENT_SPEED
 
     # Check collisions
     collected_letter= check_collisions()
@@ -79,7 +114,8 @@ while True:
         print(f"You've picked up {collected_letter}! You have {POINTS} points")
 
     # Draw background
-    screen.fill(BACKGROUND_COLOR)
+    # screen.fill(BACKGROUND_COLOR)
+    screen.blit(background_image, background_rect)
 
     # Draw letters
     for letter_info in letters:
@@ -96,10 +132,13 @@ while True:
         for angle in range(-30, 31, 10)
     ])
 
+
+      
     # Check if all letters are picked
     if not letters:
-        font = pg.font.SysFont("Arial", 36)
-        word_text = font.render(f"Good job. You found {word.upper()}", True, (255, 255, 255))
+        # font = pg.font.SysFont("Arial", 36)
+        font = pg.font.Font(f"{tasks.FONT_PATH}/mario.ttf", 20)
+        word_text = font.render(f"Good job. You found {word.upper()} and scored {POINTS} points", True, (255, 255, 255))
         screen.blit(word_text, (WIDTH // 2 - word_text.get_width() // 2, HEIGHT // 2 - word_text.get_height() // 2))
 
     #    the meaning and word texts are clashing

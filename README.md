@@ -4,16 +4,39 @@ A retro version of MazeRunner that utilises Python 3D modelling to expose a 'Wor
 
 
 ## Setting up the environment
-1. PyCairo configuration.
-Refer to this [PyCairo tutorial](https://github.com/kuriofoolio/CairoPlayground.git) to get started with PyCairo.
+* Clone the repository as shown:
 
-2. PyGame configuration.
+`git@github.com:kranika/MazeLearner.git`
+* Change to the project directory:
 
-    Install PyGame: `pip install pygame`
+`cd MazeLearner`
+* Required libraries and packages are listed in the `requirements.txt` file.
 
-3. Panda3D configuration.
+* To check/refresh the required modules for the project, run the following command on your project directory:
 
-    Install Panda3D: `pip install panda3D`
+`pip freeze > requirements.txt`
+
+* Install the required modules in the `requirements.txt` file by running the following command:
+
+`pip install -r requirements.txt`
+
+* Run the project by typing the following command:
+
+`python main.py`
+  (This instruction depends on how you run your .py files)
+
+* Setting up personal logs
+
+`import logging`
+  
+`logging.basicConfig(filename='log.txt', level=logging.INFO)`
+
+  Learn more about [Python logs](https://docs.python.org/3/library/logging.html).
+  
+
+* You may need to obtain a **Wordnik API Key** in order to work with word meanings.
+
+  Visit [Wordnik](https://developer.wordnik.com) to learn more.
 
 ## Contribution
 Contributions are welcome! Feel free to submit bug reports, feature requests, or even pull requests to improve the game.
